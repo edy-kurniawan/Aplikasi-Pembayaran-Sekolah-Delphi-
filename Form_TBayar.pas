@@ -1,0 +1,345 @@
+unit Form_TBayar;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, jpeg, ExtCtrls, Buttons, Mask, DBCtrls, DB, DBTables,
+  ComCtrls, Grids, DBGrids;
+
+type
+  TForm_TPembayaran = class(TForm)
+    Label1: TLabel;
+    BitBtn1: TBitBtn;
+    Panel1: TPanel;
+    Image2: TImage;
+    Label4: TLabel;
+    Label5: TLabel;
+    Image3: TImage;
+    Label6: TLabel;
+    Label7: TLabel;
+    Image4: TImage;
+    Label8: TLabel;
+    Label9: TLabel;
+    Image5: TImage;
+    Label10: TLabel;
+    Label11: TLabel;
+    Image6: TImage;
+    Label12: TLabel;
+    Label13: TLabel;
+    Image7: TImage;
+    Label14: TLabel;
+    Label15: TLabel;
+    Image8: TImage;
+    Label16: TLabel;
+    Label17: TLabel;
+    Image9: TImage;
+    Label18: TLabel;
+    Label19: TLabel;
+    Image10: TImage;
+    Label20: TLabel;
+    Label21: TLabel;
+    Image11: TImage;
+    Label22: TLabel;
+    Label23: TLabel;
+    GroupBox1: TGroupBox;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label24: TLabel;
+    Label25: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    dbenama: TDBEdit;
+    dbekelas: TDBEdit;
+    DBLookupComboBox2: TDBLookupComboBox;
+    GroupBox2: TGroupBox;
+    Label26: TLabel;
+    Label27: TLabel;
+    Label28: TLabel;
+    Label29: TLabel;
+    dbenominal: TDBEdit;
+    ejumlah: TEdit;
+    etotal: TEdit;
+    Label31: TLabel;
+    ekode: TEdit;
+    Label32: TLabel;
+    DateTimePicker1: TDateTimePicker;
+    bbnew: TBitBtn;
+    bbsave: TBitBtn;
+    bbdelete: TBitBtn;
+    Table1: TTable;
+    DataSource1: TDataSource;
+    Table2: TTable;
+    Table3: TTable;
+    Table4: TTable;
+    DataSource2: TDataSource;
+    DataSource3: TDataSource;
+    DataSource4: TDataSource;
+    DBGrid1: TDBGrid;
+    GroupBox3: TGroupBox;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
+    ComboBox1: TComboBox;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure bbsaveClick(Sender: TObject);
+    procedure bbnewClick(Sender: TObject);
+    procedure bbdeleteClick(Sender: TObject);
+    procedure ejumlahChange(Sender: TObject);
+    procedure Image2Click(Sender: TObject);
+    procedure Label4Click(Sender: TObject);
+    procedure Label5Click(Sender: TObject);
+    procedure Image3Click(Sender: TObject);
+    procedure Label6Click(Sender: TObject);
+    procedure Label7Click(Sender: TObject);
+    procedure Image6Click(Sender: TObject);
+    procedure Label12Click(Sender: TObject);
+    procedure Label13Click(Sender: TObject);
+    procedure Image5Click(Sender: TObject);
+    procedure Label10Click(Sender: TObject);
+    procedure Label11Click(Sender: TObject);
+    procedure Image7Click(Sender: TObject);
+    procedure Label14Click(Sender: TObject);
+    procedure Label15Click(Sender: TObject);
+    procedure Image10Click(Sender: TObject);
+    procedure Label20Click(Sender: TObject);
+    procedure Label21Click(Sender: TObject);
+    procedure Image4Click(Sender: TObject);
+    procedure Label8Click(Sender: TObject);
+    procedure Label9Click(Sender: TObject);
+    procedure Image11Click(Sender: TObject);
+    procedure Label22Click(Sender: TObject);
+    procedure Label23Click(Sender: TObject);
+    procedure Image9Click(Sender: TObject);
+    procedure Label18Click(Sender: TObject);
+    procedure Label19Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form_TPembayaran: TForm_TPembayaran;
+
+implementation
+
+uses Form_DataSiswa, Form_DataKelas, Form_DataBayar, Form_ReportSiswa,
+  Form_ReportBayar, Form_ReportTransaksi, Form_ReportKelas,
+  Report_Tunggakan, tungakan;
+
+{$R *.dfm}
+
+procedure TForm_TPembayaran.BitBtn1Click(Sender: TObject);
+begin
+close;
+end;
+
+procedure TForm_TPembayaran.bbsaveClick(Sender: TObject);
+begin
+table2.Append;
+table2['KODE_BAYAR']:=ekode.text;
+table2['NIS']:=dblookupcombobox1.Text;
+table2['NAMA']:=dbenama.text;
+table2['KELAS']:=dbekelas.Text;
+table2['ID_BAYAR']:=dblookupcombobox2.text;
+table2['NOMINAL']:=dbenominal.Text;
+table2['JUMLAH_BAYAR']:=ejumlah.text;
+table2['TOTAL_BAYAR']:=etotal.Text;
+table2['STATUS']:=combobox1.Text;
+table2['TANGGAL_BAYAR']:=DateTimePicker1.DateTime;
+table2.post;
+ekode.Text:='';
+dbenama.Text:='';
+dbekelas.text:='';
+dbenominal.Text:='0';
+ejumlah.Text:='';
+etotal.Text:='';
+end;
+
+procedure TForm_TPembayaran.bbnewClick(Sender: TObject);
+begin
+ekode.Text:='';
+dbenama.Text:='';
+dbekelas.text:='';
+dbenominal.Text:='0';
+ejumlah.Text:='';
+etotal.Text:='';
+ekode.setfocus;
+end;
+
+procedure TForm_TPembayaran.bbdeleteClick(Sender: TObject);
+begin
+if(application.messagebox('Yakin Anda Menghapus Data Pembelian..?','KONFIRMASI',mb_yesno
+or mb_iconwarning)=idyes) then
+table2.Delete;
+ekode.Text:='';
+dbenama.Text:='';
+dbekelas.text:='';
+dbenominal.Text:='0';
+ejumlah.Text:='';
+etotal.Text:='';
+ekode.setfocus;
+end;
+
+procedure TForm_TPembayaran.ejumlahChange(Sender: TObject);
+var
+Stotal: string[20];
+harga,jum,total: single;
+kode: integer;
+begin
+val(dbenominal.Text,harga,kode);
+val(ejumlah.Text,jum,kode);
+total:=harga*jum;
+str(total:20:0,Stotal);
+etotal.text:=Stotal;
+end;
+
+procedure TForm_TPembayaran.Image2Click(Sender: TObject);
+begin
+form_siswa.show;
+end;
+
+procedure TForm_TPembayaran.Label4Click(Sender: TObject);
+begin
+form_siswa.show;
+end;
+
+procedure TForm_TPembayaran.Label5Click(Sender: TObject);
+begin
+form_siswa.show;
+end;
+
+procedure TForm_TPembayaran.Image3Click(Sender: TObject);
+begin
+form_kelas.show;
+end;
+
+procedure TForm_TPembayaran.Label6Click(Sender: TObject);
+begin
+form_kelas.show;
+end;
+
+procedure TForm_TPembayaran.Label7Click(Sender: TObject);
+begin
+form_kelas.show;
+end;
+
+procedure TForm_TPembayaran.Image6Click(Sender: TObject);
+begin
+form_datapembayaran.show;
+end;
+
+procedure TForm_TPembayaran.Label12Click(Sender: TObject);
+begin
+form_datapembayaran.show;
+end;
+
+procedure TForm_TPembayaran.Label13Click(Sender: TObject);
+begin
+form_datapembayaran.show;
+end;
+
+procedure TForm_TPembayaran.Image5Click(Sender: TObject);
+begin
+Report_Kelas.Preview;
+end;
+
+procedure TForm_TPembayaran.Label10Click(Sender: TObject);
+begin
+Report_Kelas.Preview;
+end;
+
+procedure TForm_TPembayaran.Label11Click(Sender: TObject);
+begin
+Report_Kelas.Preview;
+end;
+
+procedure TForm_TPembayaran.Image7Click(Sender: TObject);
+begin
+Report_Bayar.Preview;
+end;
+
+procedure TForm_TPembayaran.Label14Click(Sender: TObject);
+begin
+Report_Bayar.Preview;
+end;
+
+procedure TForm_TPembayaran.Label15Click(Sender: TObject);
+begin
+Report_Bayar.Preview;
+end;
+
+procedure TForm_TPembayaran.Image10Click(Sender: TObject);
+begin
+Report_TPembayaran.preview;
+end;
+
+procedure TForm_TPembayaran.Label20Click(Sender: TObject);
+begin
+Report_TPembayaran.preview;
+end;
+
+procedure TForm_TPembayaran.Label21Click(Sender: TObject);
+begin
+Report_TPembayaran.preview;
+end;
+
+procedure TForm_TPembayaran.Image4Click(Sender: TObject);
+begin
+Report_Siswa.Preview;
+end;
+
+procedure TForm_TPembayaran.Label8Click(Sender: TObject);
+begin
+Report_Siswa.Preview;
+end;
+
+procedure TForm_TPembayaran.Label9Click(Sender: TObject);
+begin
+Report_Siswa.Preview;
+end;
+
+procedure TForm_TPembayaran.Image11Click(Sender: TObject);
+begin
+ReportTunggakan.preview;
+end;
+
+procedure TForm_TPembayaran.Label22Click(Sender: TObject);
+begin
+ReportTunggakan.preview;
+end;
+
+procedure TForm_TPembayaran.Label23Click(Sender: TObject);
+begin
+ReportTunggakan.preview;
+end;
+
+procedure TForm_TPembayaran.Image9Click(Sender: TObject);
+begin
+TUNGGAKAN.show;
+end;
+
+procedure TForm_TPembayaran.Label18Click(Sender: TObject);
+begin
+
+TUNGGAKAN.show;
+end;
+
+procedure TForm_TPembayaran.Label19Click(Sender: TObject);
+begin
+
+TUNGGAKAN.show;
+end;
+
+procedure TForm_TPembayaran.BitBtn2Click(Sender: TObject);
+begin
+Report_TPembayaran.preview;
+end;
+
+procedure TForm_TPembayaran.BitBtn3Click(Sender: TObject);
+begin
+Report_TPembayaran.print;
+end;
+
+end.
